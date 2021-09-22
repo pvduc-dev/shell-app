@@ -13,18 +13,20 @@ module.exports = merge(common, {
   // },
   plugins: [
     new ModuleFederationPlugin({
-      runtime: 'my-runtime',
       name: 'app_shell',
       shared: {
         react: {
+          eager: true,
           singleton: true,
           requiredVersion: dependencies['react'],
         },
         'react-dom': {
+          eager: true,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
         'react-router-dom': {
+          eager: true,
           singleton: true,
           requiredVersion: dependencies['react-router-dom'],
         },
