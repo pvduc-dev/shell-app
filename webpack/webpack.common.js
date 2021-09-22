@@ -15,6 +15,7 @@ module.exports = {
       '@': path.resolve(__dirname, '..', 'src'),
     },
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
