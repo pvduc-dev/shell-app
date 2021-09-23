@@ -7,11 +7,11 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = merge(common, {
   mode: 'production',
-  // externals: {
-  //   'react': 'React',
-  //   'react-dom': 'ReactDOM',
-  //   'react-router-dom': 'ReactRouterDOM'
-  // },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react-router-dom': 'ReactRouterDOM'
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
