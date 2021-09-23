@@ -41,7 +41,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: 'public/index.html',
       favicon: 'public/favicon.ico'
@@ -58,8 +57,8 @@ module.exports = {
           reuseExistingChunk: true
         },
         default: {
+          priority: -20,
           filename: 'js/[name].[chunkhash].chunk.js',
-          chunks: "all",
           reuseExistingChunk: true
         },
       }

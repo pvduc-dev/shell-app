@@ -3,6 +3,7 @@ const common = require('./webpack.common');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 const { dependencies } = require('../package.json')
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = merge(common, {
   mode: 'production',
@@ -12,6 +13,7 @@ module.exports = merge(common, {
   //   'react-router-dom': 'ReactRouterDOM'
   // },
   plugins: [
+    new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
       name: 'app_shell',
       shared: {
