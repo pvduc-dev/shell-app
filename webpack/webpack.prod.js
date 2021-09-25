@@ -1,38 +1,48 @@
 const { merge } = require('webpack-merge');
-const common = require('./webpack.common');
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
+const common = require('./webpack.common');
 const { dependencies } = require('../package.json')
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
 module.exports = merge(common, {
   mode: 'production',
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'react-router-dom': 'ReactRouterDOM'
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
       name: 'app_shell',
       shared: {
         react: {
-          eager: true,
           singleton: true,
           requiredVersion: dependencies['react'],
         },
         'react-dom': {
-          eager: true,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
         'react-router-dom': {
-          eager: true,
           singleton: true,
           requiredVersion: dependencies['react-router-dom'],
         },
       },
     }),
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          filename: 'js/[name].[chunkhash].vendor.js',
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          filename: 'js/[name].[chunkhash].chunk.js',
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 })
