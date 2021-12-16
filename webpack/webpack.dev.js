@@ -9,15 +9,14 @@ module.exports = merge(common, {
   devServer: {
     port: 3000,
     historyApiFallback: true,
-  },
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'react-router-dom': 'ReactRouterDOM'
+    // compress: true,
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'app_shell',
+      remotes: {
+        map: 'map@https://gallant-hoover-3d46f7.netlify.app/js/remoteEntry.js',
+      },
       shared: {
         react: {
           singleton: true,
