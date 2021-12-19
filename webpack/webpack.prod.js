@@ -1,6 +1,7 @@
 const { merge } = require('webpack-merge');
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const path = require('path');
 
 const common = require('./webpack.common');
 const { dependencies } = require('../package.json')
@@ -36,12 +37,12 @@ module.exports = merge(common, {
       cacheGroups: {
         defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
-          filename: 'js/[name].[chunkhash].vendor.js',
+          filename: 'js/[name].[contenthash:8].vendor.js',
           priority: -10,
           reuseExistingChunk: true,
         },
         default: {
-          filename: 'js/[name].[chunkhash].chunk.js',
+          filename: 'js/[name].[contenthash:8].chunk.js',
           priority: -20,
           reuseExistingChunk: true,
         },

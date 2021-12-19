@@ -1,16 +1,18 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
-    filename: 'js/[name].[chunkhash].bundle.js',
+    filename: 'js/[name].[contenthash:8].bundle.js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     alias: {
-      '@': path.resolve(__dirname, '..', 'src'),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   module: {
@@ -40,7 +42,22 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: 'public/index.html',
-      favicon: 'public/favicon.ico'
-    })
+      filename: "index.html",
+      favicon: 'public/favicon.ico',
+      minify: true,
+    }),
+    new HtmlWebPackPlugin({
+      template: 'public/silent-check-sso.html',
+      filename: "silent-check-sso.html",
+      inject: false,
+      minify: true,
+    }),
   ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false
+      })
+    ]
+  }
 }
