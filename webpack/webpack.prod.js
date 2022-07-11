@@ -2,6 +2,7 @@ const { merge } = require('webpack-merge');
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const path = require('path');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const common = require('./webpack.common');
 const { dependencies } = require('../package.json')
@@ -29,6 +30,19 @@ module.exports = merge(common, {
           requiredVersion: dependencies['react-router-dom'],
         },
       },
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "public",
+          globOptions: {
+            ignore: [
+              '**/index.html',
+              '**/favicon.ico'
+            ],
+          }
+        },
+      ],
     }),
   ],
   optimization: {
