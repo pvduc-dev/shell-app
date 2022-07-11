@@ -16,7 +16,7 @@ root.render(
         <Route
           path="/map/*"
           element={
-            <RemoteComponent url="https://sad-haibt-e4df99.netlify.app/js/remoteEntry.js" scope="map_app" module="./Routes"/>
+            <RemoteComponent url="http://localhost:5001/js/remoteEntry.js" scope="map_app" module="./Routes"/>
           }
         />
       </Routes>
