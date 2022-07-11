@@ -9,26 +9,30 @@ module.exports = merge(common, {
   devServer: {
     port: 3000,
     historyApiFallback: true,
-    // compress: true,
+    allowedHosts: 'all',
+    hot: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'app_shell',
-      remotes: {
-        map: 'map@https://gallant-hoover-3d46f7.netlify.app/js/remoteEntry.js',
-      },
       shared: {
         react: {
           singleton: true,
           requiredVersion: dependencies['react'],
+          eager: true,
         },
         'react-dom': {
           singleton: true,
           requiredVersion: dependencies['react-dom'],
+          eager: true,
         },
         'react-router-dom': {
           singleton: true,
           requiredVersion: dependencies['react-router-dom'],
+          eager: true,
         },
       },
     }),

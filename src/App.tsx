@@ -1,18 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Routes from "./components/routes";
-import {keycloak} from "./utils/keycloak";
+import React, {lazy, Suspense} from 'react';
+import {createRoot} from "react-dom/client";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+// @ts-ignore
+import {RemoteComponent} from "react-dynamic-remote-component";
 
-keycloak.init({
-  onLoad: 'check-sso',
-  silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
-}).then((auth) => {
-  if (auth) {
-    ReactDOM.render(
-      <Routes/>,
-      document.getElementById('root')
-    )
-  } else {
-    keycloak.login()
-  }
-})
+const container = document.getElementById('root');
+const root = createRoot(container as HTMLElement);
+
+root.render(
+  <div style={{display: "flex", flexDirection: 'column', height: '100vh'}}>
+    <header style={{height: '70px', background: '#ccc'}}>
+    </header>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/map/*"
+          element={
+            <RemoteComponent url="http://localhost:5001/js/remoteEntry.js" scope="map_app" module="./Routes"/>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  </div>
+)
