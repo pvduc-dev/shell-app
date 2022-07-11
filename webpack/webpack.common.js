@@ -46,12 +46,6 @@ module.exports = {
       favicon: 'public/favicon.ico',
       minify: true,
     }),
-    new HtmlWebPackPlugin({
-      template: 'public/silent-check-sso.html',
-      filename: "silent-check-sso.html",
-      inject: false,
-      minify: true,
-    }),
   ],
   optimization: {
     minimizer: [

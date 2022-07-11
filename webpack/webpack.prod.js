@@ -13,21 +13,21 @@ module.exports = merge(common, {
     new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
       name: 'app_shell',
-      remotes: {
-        map: 'map@https://gallant-hoover-3d46f7.netlify.app/js/remoteEntry.js',
-      },
       shared: {
         react: {
           singleton: true,
           requiredVersion: dependencies['react'],
+          eager: true,
         },
         'react-dom': {
           singleton: true,
           requiredVersion: dependencies['react-dom'],
+          eager: true,
         },
         'react-router-dom': {
           singleton: true,
           requiredVersion: dependencies['react-router-dom'],
+          eager: true,
         },
       },
     }),
